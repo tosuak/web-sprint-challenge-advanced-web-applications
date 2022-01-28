@@ -4,11 +4,14 @@ import styled from 'styled-components';
 import Article from './Article';
 import EditForm from './EditForm';
 import axiosWithAuth from '../utils/axiosWithAuth';
+import { useParams } from 'react-router';
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
+
+    const { id } = useParams();
 
     useEffect(() => {
         axiosWithAuth()
@@ -16,14 +19,21 @@ const View = (props) => {
         .then(resp => {
             setArticles(resp.data)
         })
-        .catch(err => console.log({err}))
+        .catch(err => console.log(err.response.data.error))
     }, []);
 
 
     const handleDelete = (id) => {
+       axiosWithAuth()
+       .delete(`http://localhost:9000/api/articles/${id}`)
+       .then(resp => {
+           setArticles(resp.data)
+       })
+       .catch(err => console.log(err))
     }
 
     const handleEdit = (article) => {
+        
     }
 
     const handleEditSelect = (id)=> {

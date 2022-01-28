@@ -12,7 +12,7 @@ const Logout = () => {
             localStorage.removeItem('token');
             push('/login');
         })
-        .catch(err => console.log({err}))
+        .catch(err => console.log(err.response.data.error))
     }, [])
 
     return(<div></div>);
